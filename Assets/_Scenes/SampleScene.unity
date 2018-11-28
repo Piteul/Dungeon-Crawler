@@ -3171,6 +3171,7 @@ GameObject:
   - component: {fileID: 1092767765}
   - component: {fileID: 1092767764}
   - component: {fileID: 1092767766}
+  - component: {fileID: 1092767767}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -3268,6 +3269,18 @@ MonoBehaviour:
   outlineShaderMaterial: {fileID: 0}
   renderTexture: {fileID: 1110183626}
   extraRenderTexture: {fileID: 209709431}
+--- !u!114 &1092767767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1092767762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 9100f1d74ee6d934aab0354659eeeaa2, type: 2}
 --- !u!84 &1110183626
 RenderTexture:
   m_ObjectHideFlags: 0

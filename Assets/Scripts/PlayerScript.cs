@@ -33,12 +33,17 @@ public class PlayerScript : MonoBehaviour {
     public float minAngleY = -180;
     public float maxAngleY = 0;
 
+    Animator animator;
+
     // Use this for initialization
     void Start() {
 
         bMoving = false;
         bRotating = false;
         rayCheck = GetComponent<RayChecker>();
+
+        animator = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -49,9 +54,8 @@ public class PlayerScript : MonoBehaviour {
 
 
     public void Attack() {
-
-        if (Input.GetMouseButton(0)) {
-
+        if (Input.GetMouseButtonDown(0)) {
+            animator.SetTrigger("Attack");
         }
     }
 
