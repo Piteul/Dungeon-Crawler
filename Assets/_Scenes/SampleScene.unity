@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43872792, g: 0.48687905, b: 0.5671478, a: 1}
+  m_IndirectSpecularColor: {r: 0.43872875, g: 0.48687953, b: 0.56714904, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3550,6 +3550,7 @@ MonoBehaviour:
   viewDistanceByCase: 1
   attackDistanceByCase: 0
   rayCheck: {fileID: 0}
+  DamageText: {fileID: 1118822662274382, guid: de47623fd70d874449bdb63e24d90d70, type: 2}
 --- !u!4 &1288131172 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4525237061580956, guid: d873dbe2611b0d14c92e272e2e13cc6b,
@@ -3676,7 +3677,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-1422
+  m_Name: pb_Mesh-1572
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2

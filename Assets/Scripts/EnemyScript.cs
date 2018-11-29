@@ -22,7 +22,10 @@ public class EnemyScript : MonoBehaviour {
 
     public RayChecker rayCheck;
     GameObject player;
+    public GameObject DamageText;
 
+    //Primary
+    private float health = 100;
 
     void Start() {
 
@@ -43,13 +46,38 @@ public class EnemyScript : MonoBehaviour {
         if (SeeThePlayer()) {
             state = States.offensive;
 
+        }
+    }
 
+
+    public void takeDamage(float damage) {
+
+        health -= damage;
+
+        if (health <= 0) {
+            Destroy(this);
+        }
+        else {
+
+            if (DamageText) {
+
+                ShowDamageText();
+
+            }
 
         }
 
 
+
+
     }
 
+    public void ShowDamageText() {
+
+        Instantiate(DamageText, transform.position, Quaternion.identity, transform);
+
+
+    }
 
     private bool SeeThePlayer() {
 
