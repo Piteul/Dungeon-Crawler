@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour {
 
+    //Movement
     [Tooltip("The 'animation' loop for movement to reach your desired movement units. The defaults move 1 Unity unit. Adjust this to suit your level design.")]
     public float fMovementIncrement = 0.05f;
     [Tooltip("The 'animation' loop for movement to reach your desired movement units. The defaults move 1 Unity unit. Adjust this to suit your level design.")]
@@ -35,6 +36,10 @@ public class PlayerScript : MonoBehaviour {
 
     Animator animator;
 
+    //Primary
+
+    private float health = 100;
+    
     // Use this for initialization
     void Start() {
 
