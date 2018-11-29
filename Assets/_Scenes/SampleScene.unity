@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43872792, g: 0.48687905, b: 0.5671478, a: 1}
+  m_IndirectSpecularColor: {r: 0.43872848, g: 0.4868793, b: 0.5671484, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3011,7 +3011,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4525237061580956, guid: d873dbe2611b0d14c92e272e2e13cc6b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4.1
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 4525237061580956, guid: d873dbe2611b0d14c92e272e2e13cc6b, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3275,7 +3275,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1092767762}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
   m_Name: 
@@ -3546,10 +3546,30 @@ MonoBehaviour:
   wBackward: 0
   wLeft: 0
   wRight: 0
-  rayDistance: 4
+  rayDistance: 12
   viewDistanceByCase: 1
   attackDistanceByCase: 0
+  viewField: 0
   rayCheck: {fileID: 0}
+--- !u!114 &1288131169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1288131167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70da4870bf80557458c5ce49ce15b2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fMovementIncrement: 0.05
+  iMovementInterval: 20
+  fYLockPosition: 0
+  bMoving: 0
+  bRotating: 0
+  fRotateIncrement: 4.5
+  iRotateInterval: 20
+  fWaitForSecondsInterval: 0.01
 --- !u!4 &1288131172 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4525237061580956, guid: d873dbe2611b0d14c92e272e2e13cc6b,

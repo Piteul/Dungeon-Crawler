@@ -26,7 +26,7 @@ public class RayChecker : MonoBehaviour {
         // test each ray collision with something
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hitForward, rayDistance, 1)) {
             if (hitForward.collider.tag == "UnWalkable") {
-                Debug.Log("Can't go forward baby!");
+                //Debug.Log("Can't go forward baby!");
                 wForward = false;
             }
         }
@@ -34,7 +34,7 @@ public class RayChecker : MonoBehaviour {
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out hitRight, rayDistance, 1)) {
             if (hitRight.collider.tag == "UnWalkable") {
-                Debug.Log("Can't go right baby!");
+               // Debug.Log("Can't go right baby!");
                 wRight = false;
             }
 
@@ -43,7 +43,7 @@ public class RayChecker : MonoBehaviour {
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), out hitLeft, rayDistance, 1)) {
             if (hitLeft.collider.tag == "UnWalkable") {
-                Debug.Log("Can't go left baby!");
+               // Debug.Log("Can't go left baby!");
                 wLeft = false;
             }
         }
@@ -51,7 +51,7 @@ public class RayChecker : MonoBehaviour {
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hitBackward, rayDistance, 1)) {
             if (hitBackward.collider.tag == "UnWalkable") {
-                Debug.Log("Can't go back baby!");
+               // Debug.Log("Can't go back baby!");
                 wBackward = false;
             }
         }
