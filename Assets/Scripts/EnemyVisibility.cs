@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 public enum playerLastOrientation { Front, Left,Right};
-
+public enum Orientation { Forward, Backward,Left,Right};
 public class EnemyVisibility : MonoBehaviour {
 
     // Use this for initialization
@@ -18,11 +18,12 @@ public class EnemyVisibility : MonoBehaviour {
     [HideInInspector]
     public float viewDistance;
     //Attack
-    public float attackDistanceByCase = 1;
+    public int attackDistanceByCase = 1;
     // i don't think we need this viewDistance is sufficient
     [HideInInspector]
     public float attackDistance;
-
+    [HideInInspector]
+    public Orientation orientation = Orientation.Forward; 
     public float distanceToPlayer = 0;
     public Vector3 playerLastPosition = Vector3.zero;
 
@@ -45,6 +46,27 @@ public class EnemyVisibility : MonoBehaviour {
         attackDistance = attackDistanceByCase * rayDistance;
         //rayCheck = GetComponent<RayChecker>();
 
+    }
+
+    void calculateRotation()
+    {
+        if(transform.rotation.y - 90f < 0.2)
+        {
+            orientation = Orientation.Forward;
+            Debug.Log("Forward");
+        }
+        if (transform.rotation.y + 90f < 0.2)
+        {
+            orientation = Orientation.Backward;
+        }
+        if (transform.rotation.y - 0 < 0.2)
+        {
+            orientation = Orientation.Left;
+        }
+        if (transform.rotation.y - 180f < 0.2)
+        {
+            orientation = Orientation.Right;
+        }
     }
 
 
