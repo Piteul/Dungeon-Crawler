@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour {
+public class PoppingText : MonoBehaviour {
 
-    public int damage = 5;
-    //Attack Distance by Box
-    public int attackDistance = 1;
+    float DestroyTime = 5f;
 
 	// Use this for initialization
 	void Start () {
-		
+        Destroy(this.gameObject, DestroyTime);
 	}
 	
 	// Update is called once per frame

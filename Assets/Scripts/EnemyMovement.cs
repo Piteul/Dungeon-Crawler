@@ -78,7 +78,7 @@ public class EnemyMovement : MonoBehaviour {
 
     private void Attack()
     {
-        Debug.Log("shit");
+        //Debug.Log("shit");
     }
 
     IEnumerator StepForward()
