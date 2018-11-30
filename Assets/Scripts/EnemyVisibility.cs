@@ -58,7 +58,7 @@ public class EnemyVisibility : MonoBehaviour {
 
     }
 
-
+    //
     public bool CheckVisibilty() {
 
        /* RaycastHit hit;

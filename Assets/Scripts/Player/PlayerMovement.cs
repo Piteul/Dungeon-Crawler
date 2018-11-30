@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour {
 
     //Movement
     [Tooltip("The 'animation' loop for movement to reach your desired movement units. The defaults move 1 Unity unit. Adjust this to suit your level design.")]
-    public float fMovementIncrement = 0.05f;
+    public float fMovementIncrement = 0.2f;
     [Tooltip("The 'animation' loop for movement to reach your desired movement units. The defaults move 1 Unity unit. Adjust this to suit your level design.")]
     public float iMovementInterval = 20;
     [Tooltip("Locked Y position of the camera, adjust to suit your level design.")]
-    public float fYLockPosition = 0f;
+    public float fYLockPosition = 2f;
     [Tooltip("Public only for debugging, these values are overridden at runtime.")]
     public bool bMoving = false;
     [Tooltip("Public only for debugging, these values are overridden at runtime.")]
@@ -24,45 +24,33 @@ public class PlayerScript : MonoBehaviour {
 
     int stepSize = 4;
     int rotateSize = 90;
-    public LayerMask mur;
     float rotationX = 0;
     float rotationY = -90;
     float currentYRotation = -90;
     public float minAngleX = -90;
-    public RayChecker rayCheck;
     public float maxAngleX = 90;
     public float minAngleY = -180;
     public float maxAngleY = 0;
 
-    Animator animator;
+    private RayChecker rayCheck;
 
     //Primary
 
-    private float health = 100;
-    
     // Use this for initialization
     void Start() {
 
         bMoving = false;
         bRotating = false;
         rayCheck = GetComponent<RayChecker>();
-
-        animator = GetComponent<Animator>();
-
     }
 
-    // Update is called once per frame
-    void Update() {
-        playerMovement();
-        Attack();
-    }
+    //// Update is called once per frame
+    //void Update() {
+
+    //}
 
 
-    public void Attack() {
-        if (Input.GetMouseButtonDown(0)) {
-            animator.SetTrigger("Attack");
-        }
-    }
+
 
     void RotateCamera(bool goBack) {
         // after each rotation applied in coroutines rotateLeft(), right,etc.. we change the value of currentYRotation in order to go back to this exact rotation on mouse release.
@@ -112,28 +100,41 @@ public class PlayerScript : MonoBehaviour {
         }
         //up
         if (Input.GetKey(KeyCode.Z)) {
+
+            rayCheck.CheckMovement("Forward");
+
             if (!bRotating && !bMoving && rayCheck.wForward) {
                 StartCoroutine(StepForward());
             }
         }
         //down
         if (Input.GetKey(KeyCode.S)) {
+
+            rayCheck.CheckMovement("Backward");
+
             if (!bRotating && !bMoving && rayCheck.wBackward) {
                 StartCoroutine(StepBackward());
             }
         }
         //left
-        if (Input.GetKey(KeyCode.Q) && rayCheck.wLeft) {
-            if (!bRotating && !bMoving) {
+        if (Input.GetKey(KeyCode.Q))  {
+
+            rayCheck.CheckMovement("Left");
+
+            if (!bRotating && !bMoving && rayCheck.wLeft) {
                 StartCoroutine(StepLeft());
             }
         }
         //right
-        if (Input.GetKey(KeyCode.D) && rayCheck.wRight) {
-            if (!bRotating && !bMoving) {
+        if (Input.GetKey(KeyCode.D)) {
+
+            rayCheck.CheckMovement("Right");
+
+            if (!bRotating && !bMoving && rayCheck.wRight) {
                 StartCoroutine(StepRight());
             }
         }
+
         //rotate right
         if (Input.GetKey(KeyCode.E)) {
             if (!bRotating && !bMoving) {
@@ -147,6 +148,8 @@ public class PlayerScript : MonoBehaviour {
             }
         }
     }
+
+
 
     IEnumerator StepForward() {
         bMoving = true;
