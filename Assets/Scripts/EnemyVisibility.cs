@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,16 +18,18 @@ public class EnemyVisibility : MonoBehaviour {
     [HideInInspector]
     public float viewDistance;
     //Attack
-    public float attackDistanceByCase;
-    private float attackDistance;
+    public float attackDistanceByCase = 1;
+    // i don't think we need this viewDistance is sufficient
+    [HideInInspector]
+    public float attackDistance;
 
-    public float distanceToPlayer = Mathf.Infinity;
+    public float distanceToPlayer = 0;
+    public Vector3 playerLastPosition = Vector3.zero;
 
     private enum States { passive, offensive };
     private States state = States.passive;
 
-    public float viewField;
-    public RayChecker rayCheck;
+    public float viewField = 45f;
     GameObject player;
 
     [HideInInspector]
@@ -40,49 +42,24 @@ public class EnemyVisibility : MonoBehaviour {
 
         //Get the real view distance
         viewDistance = viewDistanceByCase * rayDistance;
-        rayCheck = GetComponent<RayChecker>();
+        attackDistance = attackDistanceByCase * rayDistance;
+        //rayCheck = GetComponent<RayChecker>();
 
     }
 
-    void Update() {
-
-        //Put the enemy in front of the player
-        //transform.LookAt(player.transform);
-        //transform.rotation = Quaternion.AngleAxis(30, Vector3.right);
-
-       /* if (CheckVisibilty()) {
-            state = States.offensive;
-
-        }*/
 
 
-    }
-
-    //
     public bool CheckVisibilty() {
 
-       /* RaycastHit hit;
-        Debug.DrawRay(transform.position, this.transform.forward * viewDistance, Color.yellow);
-
-        // he attac
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, viewDistance, 1))
-        {
-
-            if (hit.collider.tag == "Player")
-            {
-                Debug.Log("I'm gonna kick your ass");
-
-                return true;
-            }
-
-        }*/
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         // but most importantly he sees
         // Debug.Log(viewDistance);
         Vector3 direction = player.transform.position - transform.position;
-        Debug.Log(Vector3.Distance(player.transform.position, transform.position));
-        if (Vector3.Distance(player.transform.position,transform.position) <= viewDistance+2 && Vector3.Angle(direction, this.transform.forward) <= 45) // 
+        distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+        //Debug.Log(Vector3.Distance(player.transform.position, transform.position));
+        if (distanceToPlayer <= viewDistance+2 && Vector3.Angle(direction, this.transform.forward) <= viewField) // 
         {
+            playerLastPosition = player.transform.position;
             float signedAngle = Vector3.SignedAngle(direction, this.transform.forward, Vector3.up);
             if (signedAngle > -30 && signedAngle < 30)            
             {

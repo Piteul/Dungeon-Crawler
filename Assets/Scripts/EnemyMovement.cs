@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,15 +34,18 @@ public class EnemyMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         RaycastHit hit;
-        inRangeforAttack = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, enemVis.viewDistance, 1);
+        inRangeforAttack = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, enemVis.attackDistance, 1);
 
         if (enemVis.CheckVisibilty())
         {
             visibility = true;
             if (!inRangeforAttack )
-                if(!bRotating && !bMoving)
-                    StartCoroutine(StepForward());
-            else
+            {
+                int cases = (int) (((int)transform.position.x - (int)enemVis.playerLastPosition.x) / (int)enemVis.viewDistance);
+                
+                //StartCoroutine(StepForward());
+            }
+                else
                 Attack();
         }
         else
@@ -50,8 +53,12 @@ public class EnemyMovement : MonoBehaviour {
             // "random searching behaviour"
             if (visibility)
             {
-               // Quand il arrive à la dernière case où il a vu le joueur il tourne vers la dernière orientation du joueur
-               if(enemVis.distanceToPlayer <= 2)
+                int cases = (int)(((int)transform.position.x - (int)enemVis.playerLastPosition.x) / (int)enemVis.viewDistance);
+                for(int i = 0; i < cases; i++) { 
+                    StartCoroutine(StepForward());
+                }
+                // Quand il arrive à la dernière case où il a vu le joueur il tourne vers la dernière orientation du joueur
+                if (enemVis.distanceToPlayer <= 2)
                 {
                     if(!bRotating && !bMoving)
                     {
@@ -71,7 +78,7 @@ public class EnemyMovement : MonoBehaviour {
 
     private void Attack()
     {
-        throw new NotImplementedException();
+        Debug.Log("shit");
     }
 
     IEnumerator StepForward()

@@ -7,13 +7,13 @@ public class PlayerManager : MonoBehaviour {
     public float health = 100f;
     public float attackPower = 20f;
 
-    public float sizeCase = 4;
+    float sizeCase = 4;
 
     Animator animator;
     PlayerMovement PlayerMovement;
     Weapon weapon;
     // Use this for initialization
-    void Start () {
+    void Start() {
         animator = GetComponent<Animator>();
         PlayerMovement = GetComponent<PlayerMovement>();
         weapon = GetComponentInChildren<Weapon>();
@@ -21,10 +21,11 @@ public class PlayerManager : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update() {
         PlayerMovement.playerMovement();
-		
-	}
+        Attack();
+
+    }
 
 
     public void Attack() {
@@ -33,13 +34,14 @@ public class PlayerManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(0)) {
             animator.SetTrigger("Attack");
 
-            //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, weapon.attackDistance * sizeCase, 1)) {
-            //    if (hit.collider.tag == "Enemy") {
-            //        //Debug.Log("Can't go forward baby!");
-            //        wForward = false;
-            //    }
-            //}
-            //Debug.DrawRay(transform.position, this.transform.forward * rayDistance, Color.blue);
+
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, (sizeCase * weapon.attackDistance))) {
+                if (hit.collider.tag == "Enemy") {
+                    Debug.Log("Headshot");
+                }
+            }
+            Debug.DrawRay(transform.position, this.transform.forward * (sizeCase * weapon.attackDistance), Color.black);
+
         }
     }
 }
