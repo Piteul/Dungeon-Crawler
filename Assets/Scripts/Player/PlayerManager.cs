@@ -9,7 +9,8 @@ public class PlayerManager : MonoBehaviour {
 
     Animator animator;
     PlayerMovement PlayerMovement;
-    Weapon weapon;
+    [HideInInspector]
+    public Weapon weapon;
     Toolbox toolbox;
 
     // Use this for initialization

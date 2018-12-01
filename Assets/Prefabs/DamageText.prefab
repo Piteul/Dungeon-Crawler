@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 23282414236844598}
   - component: {fileID: 102409568315549226}
   - component: {fileID: 114674971199164346}
+  - component: {fileID: 95133855107761646}
   m_Layer: 0
   m_Name: DamageText
   m_TagString: Untagged
@@ -35,7 +36,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1118822662274382}
-  m_LocalRotation: {x: -0.08639661, y: -0.7018088, z: -0.08639661, w: 0.70180887}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
@@ -77,6 +78,24 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!95 &95133855107761646
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1118822662274382}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4a7c6cb7abbaff14e84280091e8cf4c6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!102 &102409568315549226
 TextMesh:
   serializedVersion: 3
@@ -93,11 +112,11 @@ TextMesh:
   m_TabSize: 1
   m_FontSize: 50
   m_FontStyle: 0
-  m_RichText: 1
+  m_RichText: 0
   m_Font: {fileID: 12800000, guid: 4aa65ebf298fd4540b3d8f299935b619, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278392856
 --- !u!114 &114674971199164346
 MonoBehaviour:
   m_ObjectHideFlags: 1

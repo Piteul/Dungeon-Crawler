@@ -44,9 +44,26 @@ public class EnemyManager : MonoBehaviour {
     /// <summary>
     /// Instantiate the Damage Text
     /// </summary>
-    void ShowDamageText(int dmg) {
+    public void ShowDamageText(int dmg) {
+        Color color = new Color(1f, 1f, 1f);
+
         GameObject damageTmp = Instantiate(DamageText, transform.position, Quaternion.identity, transform);
         damageTmp.GetComponent<TextMesh>().text = dmg.ToString();
+
+        if (dmg < player.GetComponent<PlayerManager>().weapon.damage) {
+            Debug.Log("COLOR");
+            color = new Color(0.88f, 0.86f, 0.15f);
+        }
+        else if (dmg == player.GetComponent<PlayerManager>().weapon.damage) {
+
+            color = new Color(0.95f, 0.70f, 0.15f);
+        }
+        else if (dmg > player.GetComponent<PlayerManager>().weapon.damage) {
+
+            color = new Color(0.69f, 0.09f, 0.09f);
+        }
+
+        damageTmp.GetComponent<TextMesh>().color = color;
         damageTmp.transform.LookAt(player.transform);
     }
 
