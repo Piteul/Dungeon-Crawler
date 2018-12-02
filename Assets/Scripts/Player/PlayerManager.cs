@@ -33,12 +33,6 @@ public class PlayerManager : MonoBehaviour {
         PlayerMovement.playerMovement();
         Attack();
 
-
-        //For test
-        if (Input.GetKeyDown(KeyCode.P)) {
-            TakeDamage(20);
-        }
-
     }
 
     /// <summary>
@@ -72,7 +66,7 @@ public class PlayerManager : MonoBehaviour {
 
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, (sizeBox * weapon.attackDistance))) {
                     if (hit.collider.tag == "Enemy") {
-                        dmg = toolbox.randomDamage(weapon.damage, 3);
+                        dmg = toolbox.randomValue(weapon.damage, 3);
                         EnemyManager enemy = hit.collider.gameObject.GetComponent<EnemyManager>();
                         enemy.TakeDamage(dmg);
                     }
@@ -97,6 +91,7 @@ public class PlayerManager : MonoBehaviour {
 
     public void UIGestion() {
         healthBar.value = health;
+        healthBar.transform.Find("HealthText").GetComponent<Text>().text = health.ToString();
     }
 
     IEnumerator coolDownTimer(float time) {

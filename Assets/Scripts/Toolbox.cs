@@ -20,9 +20,9 @@ public class Toolbox {
     /// Return a soft randomized damage depending on dimmer
     /// </summary>
     /// <param name="damage"></param>
-    public int randomDamage(int damage, int dimmer) {
+    public int randomValue(int value, int dimmer) {
 
-        int rd = Random.Range(Mathf.Max(0, damage - dimmer), damage + dimmer + 1);
+        int rd = Random.Range(Mathf.Max(0, value - dimmer), value + dimmer + 1);
         //Debug.Log(rd.ToString());
 
         return rd;

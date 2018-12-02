@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour {
 
-    int health = 100;
-    int damage = 10;
+    public int health = 100;
+    public int healthDimmer = 20;
+    public int damage = 10;
+    public int damageDimmer = 3;
     //Attack Distance by Box
-    int attackDistance = 1;
+    public int attackDistance = 1;
 
     public GameObject DamageText;
     GameObject player;
@@ -15,12 +17,18 @@ public class EnemyManager : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        toolbox = new Toolbox();
         player = GameObject.FindGameObjectWithTag("Player");
+        health = toolbox.randomValue(health, healthDimmer);
     }
 
     // Update is called once per frame
     void Update() {
 
+        //For test
+        if (Input.GetKeyDown(KeyCode.P)) {
+            Attack();
+        }
 
     }
 
@@ -44,8 +52,10 @@ public class EnemyManager : MonoBehaviour {
     public void Attack() {
         int dmg;
 
-        dmg = toolbox.randomDamage(damage, 3);
-        player.GetComponent<PlayerManager>().TakeDamage(dmg) ;
+        transform.localPosition = Vector3.Lerp(transform.localPosition, (transform.forward * 20f), 0.1f);
+        dmg = toolbox.randomValue(damage, damageDimmer);
+        //Debug.Log("Damage : " + dmg);
+        player.GetComponent<PlayerManager>().TakeDamage(dmg);
     }
 
     /// <summary>
