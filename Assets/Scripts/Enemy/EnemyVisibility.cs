@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 public enum playerLastOrientation { Front, Left,Right};
-public enum Orientation { Forward, Backward,Left,Right};
+public enum Orientation { North, South,West,East};
 public class EnemyVisibility : MonoBehaviour {
 
     // Use this for initialization
@@ -23,7 +23,7 @@ public class EnemyVisibility : MonoBehaviour {
     [HideInInspector]
     public float attackDistance;
     [HideInInspector]
-    public Orientation orientation = Orientation.Forward; 
+    public Orientation orientation = Orientation.North; 
     public float distanceToPlayer = 0;
     public Vector3 playerLastPosition = Vector3.zero;
 
@@ -34,7 +34,7 @@ public class EnemyVisibility : MonoBehaviour {
     GameObject player;
 
     [HideInInspector]
-    public playerLastOrientation plOrientation = playerLastOrientation.Front;
+    public playerLastOrientation plOrientation = playerLastOrientation.Right;
 
 
     void Start() {
@@ -48,24 +48,30 @@ public class EnemyVisibility : MonoBehaviour {
 
     }
 
-    void calculateRotation()
+    public void calculateRotation()
     {
-        if(transform.rotation.y - 90f < 0.2)
+        
+        float angle = transform.rotation.eulerAngles.y;
+        angle %= 360;
+        if (angle > 180)
+            angle -= 360;
+        Debug.Log("Result is " + angle);
+        if (Mathf.Abs(angle - 90f) < 0.2)
         {
-            orientation = Orientation.Forward;
-            Debug.Log("Forward");
+            orientation = Orientation.North;
+            //Debug.Log("Forward");
         }
-        if (transform.rotation.y + 90f < 0.2)
+        if (Mathf.Abs(angle + 90f) < 0.2)
         {
-            orientation = Orientation.Backward;
+            orientation = Orientation.South;
         }
-        if (transform.rotation.y - 0 < 0.2)
+        if (Mathf.Abs(angle - 0) < 0.2)
         {
-            orientation = Orientation.Left;
+            orientation = Orientation.East;
         }
-        if (transform.rotation.y - 180f < 0.2)
+        if (Mathf.Abs(angle - 180f) < 0.2)
         {
-            orientation = Orientation.Right;
+            orientation = Orientation.West;
         }
     }
 
@@ -81,30 +87,39 @@ public class EnemyVisibility : MonoBehaviour {
         //Debug.Log(Vector3.Distance(player.transform.position, transform.position));
         if (distanceToPlayer <= viewDistance+2 && Vector3.Angle(direction, this.transform.forward) <= viewField) // 
         {
-            playerLastPosition = player.transform.position;
-            float signedAngle = Vector3.SignedAngle(direction, this.transform.forward, Vector3.up);
-            if (signedAngle > -30 && signedAngle < 30)            
-            {
-                plOrientation = playerLastOrientation.Front;
-                //Debug.Log("you're infront of me bitch");
-                return true;
-            }
-
-            if(signedAngle < -30)
-            {
-                plOrientation = playerLastOrientation.Right;
-                return true;
-                //Debug.Log("you're on my right bitch");
-            }
-            if (signedAngle > 30)
-            {
-                plOrientation = playerLastOrientation.Left;
-                return true;
-                //Debug.Log("you're on my left bitch");
-            }
+            return true;
 
         }
         return false;
+    }
+
+    public void playerOrientation()
+    {
+        if (CheckVisibilty()) { 
+            playerLastPosition = player.transform.position;
+            Vector3 direction = player.transform.position - transform.position;
+            float signedAngle = Vector3.SignedAngle(direction, this.transform.forward, Vector3.up);
+            
+            if (signedAngle > -20 && signedAngle < 20)
+            {
+                plOrientation = playerLastOrientation.Front;
+                //Debug.Log("you're infront of me bitch");
+                //return true;
+            }
+
+            if (signedAngle < -20)
+            {
+                plOrientation = playerLastOrientation.Right;
+                //return true;
+                //Debug.Log("you're on my right bitch");
+            }
+            if (signedAngle > 20)
+            {
+                plOrientation = playerLastOrientation.Left;
+                //return true;
+                //Debug.Log("you're on my left bitch");
+            }
+        }
     }
 
 }

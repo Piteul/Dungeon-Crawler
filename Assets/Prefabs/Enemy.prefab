@@ -84,14 +84,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70da4870bf80557458c5ce49ce15b2ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fMovementIncrement: 0.05
-  iMovementInterval: 20
-  fYLockPosition: 0
-  bMoving: 0
-  bRotating: 0
+  isMove: 0
   fRotateIncrement: 4.5
   iRotateInterval: 20
-  fWaitForSecondsInterval: 0.01
 --- !u!114 &114559052744010610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -112,6 +107,7 @@ MonoBehaviour:
   viewDistance: 0
   attackDistanceByCase: 1
   attackDistance: 0
+  orientation: 0
   distanceToPlayer: 0
   playerLastPosition: {x: 0, y: 0, z: 0}
   viewField: 45

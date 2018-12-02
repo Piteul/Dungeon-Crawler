@@ -12,6 +12,7 @@ public class EnemyMovement : MonoBehaviour {
     private bool dejaVu = false;
     public bool inRangeforAttack = false;
     private int stepSize = 4;
+    private bool boxesCalculated = false;
     public float fRotateIncrement = 4.5f;
     public int iRotateInterval = 20;
     void Start()
@@ -22,28 +23,40 @@ public class EnemyMovement : MonoBehaviour {
 
     void Update()
     {
+        
+        Debug.Log(enemVis.orientation);
+        enemVis.playerOrientation();
         RaycastHit hit;
+        
+        //Debug.Log("cv"+enemVis.CheckVisibilty());
         inRangeforAttack = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, enemVis.attackDistance, 1);
-        if (enemVis.CheckVisibilty() && !dejaVu)
+        if (enemVis.CheckVisibilty() && !dejaVu) //
         {
             
+            //Debug.Log("i see you ");
+            enemVis.playerOrientation();
             dejaVu = true;
-            if (!inRangeforAttack)
+            if (!inRangeforAttack && !boxesCalculated) //
             {
                 
-                int boxes = countBoxes() - enemVis.attackDistanceByCase;
-                StartCoroutine(move(boxes));
-                inRangeforAttack = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, enemVis.attackDistance, 1);
+                int boxes = countBoxes(); //- enemVis.attackDistanceByCase;
+                boxesCalculated = true;
+                StartCoroutine(move(boxes));   
             }
             else
                 Attack();
         }
-        else if (!enemVis.CheckVisibilty() && dejaVu)
+        // this is to rotate the player when he no longer sees the player
+       /* else if (!enemVis.CheckVisibilty() && dejaVu)
         {
+            /*Debug.Log("rotating to fetch the player");
             dejaVu = false;
+            boxesCalculated = false;
+            enemVis.playerOrientation();
+            
             int boxes = countBoxes();
             StartCoroutine(move(boxes));
-            /*if (enemVis.plOrientation == playerLastOrientation.Left)
+            if (enemVis.plOrientation == playerLastOrientation.Left)
             {
                 StartCoroutine(RotateLeft());
             }
@@ -51,9 +64,26 @@ public class EnemyMovement : MonoBehaviour {
             {
                 StartCoroutine(RotateRight());
             }*/
+        //}
+    }
+    private void rotateEnemy()
+    {
+        
+        //dejaVu = false;
+        //boxesCalculated = false;
+        enemVis.playerOrientation();
+        //Debug.Log("rotating to fetch the player");
+        //int boxes = countBoxes();
+        //StartCoroutine(move(boxes));
+        if (enemVis.plOrientation == playerLastOrientation.Left)
+        {
+            StartCoroutine(RotateLeft());
+        }
+        else if (enemVis.plOrientation == playerLastOrientation.Right)
+        {
+            StartCoroutine(RotateRight());
         }
     }
-
     private void Attack()
     {
         //Debug.Log("Attacking");
@@ -64,17 +94,17 @@ public class EnemyMovement : MonoBehaviour {
         switch (enemVis.orientation)
         {
             // 4 est le step size
-            case (Orientation.Forward):
-                Debug.Log("forward");
+            case (Orientation.North):
+                //Debug.Log("forward");
                 return Mathf.Abs((int)(((int)transform.position.x - (int)enemVis.playerLastPosition.x) / stepSize));
-            case (Orientation.Backward):
-                Debug.Log("backward");
+            case (Orientation.South):
+               // Debug.Log("backward");
                 return Mathf.Abs((int)(((int)transform.position.x - (int)enemVis.playerLastPosition.x) / stepSize));
-            case (Orientation.Right):
-                Debug.Log("right");
+            case (Orientation.East):
+                //Debug.Log("right");
                 return Mathf.Abs((int)(((int)transform.position.z - (int)enemVis.playerLastPosition.z) / stepSize));
-            case (Orientation.Left):
-                Debug.Log("left");
+            case (Orientation.West):
+                //Debug.Log("left");
                 return Mathf.Abs((int)(((int)transform.position.z - (int)enemVis.playerLastPosition.z) / stepSize));
 
         }
@@ -83,33 +113,38 @@ public class EnemyMovement : MonoBehaviour {
 
     IEnumerator move(int boxes)
     {
-        Debug.Log(boxes);
-        for(int i =0; i < boxes; i++) { 
+        //Debug.Log(boxes);
+        int i = -1;
+        for (i = 0; i < boxes; i++) {
+            RaycastHit hit;
+            inRangeforAttack = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, enemVis.attackDistance, 1);
+            if (inRangeforAttack)
+                break;
             switch (enemVis.orientation)
             {
-                case (Orientation.Forward):
+                case (Orientation.North):
                     for (int g = 0; g < 20; g++)
                     {
                         transform.position += Vector3.right * 0.2f;
                         yield return new WaitForSeconds(0.01f);
                     }
-                    Debug.Log("moving");
+                    //Debug.Log("moving");
                     break;
-                case (Orientation.Backward):
+                case (Orientation.South):
                     for (int g = 0; g < 20; g++)
                     {
                         transform.position -= Vector3.right * 0.2f;
                         yield return new WaitForSeconds(0.01f);
                     }
                     break;
-                case (Orientation.Right):
+                case (Orientation.East):
                     for (int g = 0; g < 20; g++)
                     {
                         transform.position += Vector3.forward * 0.2f;
                         yield return new WaitForSeconds(0.01f);
                     }
                     break;
-                case (Orientation.Left):
+                case (Orientation.West):
                     for (int g = 0; g < 20; g++)
                     {
                         transform.position -= Vector3.forward * 0.2f;
@@ -117,187 +152,53 @@ public class EnemyMovement : MonoBehaviour {
                     }
                     break;
             }
+            
             yield return new WaitForSeconds(0.5f);
         }
-
+        //if (i == 0) i = -1;
+        if(i == boxes) { 
+            rotateEnemy();
+            
+        }
         isMove = false;
     }
 
     IEnumerator RotateRight()
     {
-        
-
+        Debug.Log("Rotating Right");
         for (int g = 0; g < iRotateInterval; g++)
         {
             //transform.position = new Vector3(Mathf.Round(transform.position.x), fYLockPosition, Mathf.Round(transform.position.z));
             transform.localEulerAngles += new Vector3(0, fRotateIncrement, 0);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.02f);
         }
         yield return new WaitForSeconds(0.5f);
-        
-        var wait = new WaitForSeconds(0.5f);
+        // reset key boolean for recalculation, c'est ça le problème avec les coroutines en fait si tu les reset pas ici
+        // ça executera en parallèle et ça sera le bordel, alors il faut faire gaffe
+        enemVis.calculateRotation();
+        dejaVu = false;
+        boxesCalculated = false;
+        //var wait = new WaitForSeconds(0.5f);
 
     }
 
     IEnumerator RotateLeft()
     {
-        
-
+        Debug.Log("Rotating Left");
         for (int g = 0; g < iRotateInterval; g++)
         {
             //transform.position = new Vector3(Mathf.Round(transform.position.x), fYLockPosition, Mathf.Round(transform.position.z));
             transform.localEulerAngles += new Vector3(0, -fRotateIncrement, 0);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.02f);
         }
         yield return new WaitForSeconds(0.5f);
-
-        var wait = new WaitForSeconds(0.5f);
+        // reset key boolean for recalculation, c'est ça le problème avec les coroutines en fait si tu les reset pas ici 
+        // ça executera en parallèle et ça sera le bordel, alors il faut faire gaffe
+        enemVis.calculateRotation();
+        dejaVu = false;
+        boxesCalculated = false;
+        //var wait = new WaitForSeconds(0.5f);
 
     }
-
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    [Tooltip("The 'animation' loop for movement to reach your desired movement units. The defaults move 1 Unity unit. Adjust this to suit your level design.")]
-    public float fMovementIncrement = 0.1f;
-    [Tooltip("The 'animation' loop for movement to reach your desired movement units. The defaults move 1 Unity unit. Adjust this to suit your level design.")]
-    public float iMovementInterval = 20;
-    [Tooltip("Locked Y position of the camera, adjust to suit your level design.")]
-    public float fYLockPosition = 0f;
-    [Tooltip("Public only for debugging, these values are overridden at runtime.")]
-    public bool bMoving = false;
-    [Tooltip("Public only for debugging, these values are overridden at runtime.")]
-    public bool bRotating = false;
-    [Tooltip("fRotateIncrement * iRotateInterval must equal 90 for full grid movement. For faster rotating, lower the interval and raise the increment.")]
-    public float fRotateIncrement = 4.5f;
-    [Tooltip("fRotateIncrement * iRotateInterval must equal 90 for full grid movement. For faster rotating, lower the interval and raise the increment.")]
-    public int iRotateInterval = 20;
-    [Tooltip("The WaitForSeconds value returned for each return yeild of the Coroutines.")]
-    public float fWaitForSecondsInterval = 0.01f;
-
-
-    private bool visibility = false;
-    private EnemyVisibility enemVis;
-    private bool inRangeforAttack = false; 
-    // Use this for initialization
-    void Start () {
-        enemVis = GetComponent<EnemyVisibility>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        RaycastHit hit;
-        inRangeforAttack = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, enemVis.attackDistance, 1);
-
-        if (enemVis.CheckVisibilty())
-        {
-            visibility = true;
-            if (!inRangeforAttack )
-            {
-                int cases = (int) (((int)transform.position.x - (int)enemVis.playerLastPosition.x) / (int)enemVis.viewDistance);
-                
-                //StartCoroutine(StepForward());
-            }
-                else
-                Attack();
-        }
-        else
-        {
-            // "random searching behaviour"
-            if (visibility)
-            {
-                Debug.Log("got here");
-
-                // calcul des cases à marcher sur
-                int cases = Mathf.Abs((int)(((int)transform.position.x - (int)enemVis.playerLastPosition.x) / (int)enemVis.viewDistance));
-
-                for(int i = 0; i < cases; i++) {
-                    Debug.Log(cases);
-                    StartCoroutine(StepForward());
-                }
-                // Quand il arrive à la dernière case où il a vu le joueur il tourne vers la dernière orientation du joueur
-                if (enemVis.distanceToPlayer <= 2)
-                {
-                    if(!bRotating && !bMoving)
-                    {
-                        if(enemVis.plOrientation == playerLastOrientation.Left)
-                        {
-                            StartCoroutine(RotateLeft());
-                        }
-                        else if (enemVis.plOrientation == playerLastOrientation.Right)
-                        {
-                            StartCoroutine(RotateRight());
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void Attack()
-    {
-        Debug.Log("shit");
-    }
-
-    IEnumerator StepForward()
-    {
-        bMoving = true;
-        for (int g = 0; g < iMovementInterval; g++)
-        {
-            transform.position += transform.forward * fMovementIncrement;
-            yield return new WaitForSeconds(fWaitForSecondsInterval);
-        }
-        yield return new WaitForSeconds(fWaitForSecondsInterval);
-        bMoving = false;
-    }
-
-    IEnumerator RotateRight()
-    {
-        bRotating = true;
-
-        for (int g = 0; g < iRotateInterval; g++)
-        {
-            //transform.position = new Vector3(Mathf.Round(transform.position.x), fYLockPosition, Mathf.Round(transform.position.z));
-            transform.localEulerAngles += new Vector3(0, fRotateIncrement, 0);
-            
-            yield return new WaitForSeconds(fWaitForSecondsInterval);
-        }
-        yield return new WaitForSeconds(fWaitForSecondsInterval);
-        bRotating = false;
-        var wait = new WaitForSeconds(fWaitForSecondsInterval);
-
-    }
-
-    IEnumerator RotateLeft()
-    {
-        bRotating = true;
-
-        for (int g = 0; g < iRotateInterval; g++)
-        {
-            //transform.position = new Vector3(Mathf.Round(transform.position.x), fYLockPosition, Mathf.Round(transform.position.z));
-            transform.localEulerAngles += new Vector3(0, -fRotateIncrement, 0);
-            
-            yield return new WaitForSeconds(fWaitForSecondsInterval);
-        }
-        yield return new WaitForSeconds(fWaitForSecondsInterval);
-        bRotating = false;
-        var wait = new WaitForSeconds(fWaitForSecondsInterval);
-
-    }*/
