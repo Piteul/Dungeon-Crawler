@@ -1397,7 +1397,7 @@ RectTransform:
   m_Children:
   - {fileID: 653553419}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3394,6 +3394,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intensity: 0
+--- !u!114 &899770904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 899770895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1553936188, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BroadcastPort: 47777
+  m_BroadcastKey: 2222
+  m_BroadcastVersion: 1
+  m_BroadcastSubVersion: 1
+  m_BroadcastInterval: 1000
+  m_UseNetworkManager: 0
+  m_BroadcastData: HELLO
+  m_ShowGUI: 1
+  m_OffsetX: 0
+  m_OffsetY: 0
 --- !u!1001 &932924592
 Prefab:
   m_ObjectHideFlags: 0
@@ -6099,6 +6120,16 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114018966985640490, guid: 06946dadfde0bff4ba10e976f4125b31,
+        type: 2}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 437104230}
+    - target: {fileID: 114018966985640490, guid: 06946dadfde0bff4ba10e976f4125b31,
+        type: 2}
+      propertyPath: CoolDownSlider
+      value: 
+      objectReference: {fileID: 653553420}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06946dadfde0bff4ba10e976f4125b31, type: 2}
   m_IsPrefabAsset: 0
