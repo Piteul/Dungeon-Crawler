@@ -28,7 +28,7 @@ public class EnemyManager : MonoBehaviour {
     /// Control how many damage the enemy take and manage the damage display
     /// </summary>
     /// <param name="damage"></param>
-    public void takeDamage(int damage) {
+    public void TakeDamage(int damage) {
 
         health -= damage;
         //Debug.Log(health);
@@ -45,7 +45,7 @@ public class EnemyManager : MonoBehaviour {
         int dmg;
 
         dmg = toolbox.randomDamage(damage, 3);
-        player.GetComponent<PlayerManager>().takeDamage(dmg) ;
+        player.GetComponent<PlayerManager>().TakeDamage(dmg) ;
     }
 
     /// <summary>
