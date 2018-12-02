@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour {
 
     float sizeBox = 4;
     public float health = 100f;
-
+    public bool coolDown = false;
+    public float coolDownTime = 2f;
+    private float time ;
     Animator animator;
+    public Slider CoolDownSlider;
     PlayerMovement PlayerMovement;
     [HideInInspector]
     public Weapon weapon;
@@ -23,7 +25,6 @@ public class PlayerManager : MonoBehaviour {
         PlayerMovement = GetComponent<PlayerMovement>();
         weapon = GetComponentInChildren<Weapon>();
         toolbox = new Toolbox();
-        healthBar.value = health;
     }
 
     // Update is called once per frame
@@ -43,22 +44,43 @@ public class PlayerManager : MonoBehaviour {
     /// Manage the player attack
     /// </summary>
     public void Attack() {
+
+        
         RaycastHit hit;
         int dmg;
+        // here the player is in cooldown mode and can't attack
+        if (coolDown)
+        {
+            CoolDownSlider.gameObject.SetActive(true);
+            // this is to count time
+            time -= Time.deltaTime;
+             CoolDownSlider.value = time * CoolDownSlider.maxValue / coolDownTime;
+            
+            if (time < 0)
+            {
+                coolDown = false;
+                time = coolDownTime;
+                CoolDownSlider.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0)) {
 
-        if (Input.GetMouseButtonDown(0)) {
-            animator.SetTrigger("Attack");
+                time = coolDownTime;
+                coolDown = true;
+                animator.SetTrigger("Attack");
 
 
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, (sizeBox * weapon.attackDistance))) {
                 if (hit.collider.tag == "Enemy") {
                     dmg = toolbox.randomDamage(weapon.damage, 3);
                     EnemyManager enemy = hit.collider.gameObject.GetComponent<EnemyManager>();
-                    enemy.TakeDamage(dmg);
+                    enemy.takeDamage(dmg);
                 }
+                Debug.DrawRay(transform.position, this.transform.forward * (sizeBox * weapon.attackDistance), Color.black);
+                StartCoroutine(coolDownTimer(coolDownTime));
             }
-            Debug.DrawRay(transform.position, this.transform.forward * (sizeBox * weapon.attackDistance), Color.black);
-
         }
     }
 
@@ -74,7 +96,4 @@ public class PlayerManager : MonoBehaviour {
 
     }
 
-    public void UIGestion() {
-        healthBar.value = health;
-    }
 }
