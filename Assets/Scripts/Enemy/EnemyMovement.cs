@@ -46,35 +46,13 @@ public class EnemyMovement : MonoBehaviour {
             else
                 Attack();
         }
-        // this is to rotate the player when he no longer sees the player
-       /* else if (!enemVis.CheckVisibilty() && dejaVu)
-        {
-            /*Debug.Log("rotating to fetch the player");
-            dejaVu = false;
-            boxesCalculated = false;
-            enemVis.playerOrientation();
-            
-            int boxes = countBoxes();
-            StartCoroutine(move(boxes));
-            if (enemVis.plOrientation == playerLastOrientation.Left)
-            {
-                StartCoroutine(RotateLeft());
-            }
-            else if (enemVis.plOrientation == playerLastOrientation.Right)
-            {
-                StartCoroutine(RotateRight());
-            }*/
-        //}
+       
     }
     private void rotateEnemy()
     {
         
-        //dejaVu = false;
-        //boxesCalculated = false;
+
         enemVis.playerOrientation();
-        //Debug.Log("rotating to fetch the player");
-        //int boxes = countBoxes();
-        //StartCoroutine(move(boxes));
         if (enemVis.plOrientation == playerLastOrientation.Left)
         {
             StartCoroutine(RotateLeft());

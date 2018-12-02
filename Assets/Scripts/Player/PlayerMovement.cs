@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour {
     int rotateSize = 90;
     float rotationX = 0;
     float rotationY = -90;
+    bool lockMouseHold = false;
     float currentYRotation = -90;
     public float minAngleX = -90;
     public float maxAngleX = 90;
@@ -49,18 +50,23 @@ public class PlayerMovement : MonoBehaviour {
 
     //}
 
-
+    private void Update()
+    {
+        
+    }
 
 
     void RotateCamera(bool goBack) {
         // after each rotation applied in coroutines rotateLeft(), right,etc.. we change the value of currentYRotation in order to go back to this exact rotation on mouse release.
-
-        if (goBack) {
-            // lorsqu'on lache la souris, on revient à la rotation initiale
-            transform.rotation = Quaternion.Euler(0, -90, 0);
-
+        if (!lockMouseHold) {
+            lockMouseHold = true;
             rotationX = 0;
             rotationY = currentYRotation;
+        }
+        if (goBack) {
+            // lorsqu'on lache la souris, on revient à la rotation initiale
+            lockMouseHold = false;
+            transform.rotation = Quaternion.Euler(0, currentYRotation, 0);
             //cam.localRotation = Quaternion.Euler(0, 0, 0);
             return;
         }
@@ -72,7 +78,7 @@ public class PlayerMovement : MonoBehaviour {
 
         // constraint the rotation on both axis
         rotationX = Mathf.Clamp(rotationX, -90, 90);
-        rotationY = Mathf.Clamp(rotationY, -180, 0);
+        rotationY = Mathf.Clamp(rotationY, currentYRotation - 90, currentYRotation + 90);
 
         // apply the new rotation.
         transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
@@ -85,18 +91,25 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 position = transform.position;
         Vector3 rotation = transform.localEulerAngles;
 
+
+        if (Input.GetMouseButton(1))
+        {
+            // go back is false this means apply rotation change, no going back!!   
+            bRotating = bMoving = true;
+            RotateCamera(false);
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            // go back is true, go back to initial roation.
+            RotateCamera(true);
+            bRotating = bMoving = false;
+
+        }
+
         if (!bRotating && !bMoving) {
             transform.position = new Vector3(Mathf.Round(transform.position.x), fYLockPosition, Mathf.Round(transform.position.z));
 
-            if (Input.GetMouseButton(1)) {
-                // go back is false this means apply rotation change, no going back!!
-                RotateCamera(false);
-            }
-            if (Input.GetMouseButtonUp(1)) {
-                // go back is true, go back to initial roation.
-                RotateCamera(true);
 
-            }
         }
         //up
         if (Input.GetKey(KeyCode.Z)) {
@@ -197,12 +210,17 @@ public class PlayerMovement : MonoBehaviour {
         for (int g = 0; g < iRotateInterval; g++) {
             //transform.position = new Vector3(Mathf.Round(transform.position.x), fYLockPosition, Mathf.Round(transform.position.z));
             transform.localEulerAngles += new Vector3(0, fRotateIncrement, 0);
-            currentYRotation += fRotateIncrement;
             yield return new WaitForSeconds(fWaitForSecondsInterval);
         }
         yield return new WaitForSeconds(fWaitForSecondsInterval);
         bRotating = false;
+        currentYRotation = transform.localEulerAngles.y;
+        currentYRotation %= 360;
+        if (currentYRotation > 180)
+            currentYRotation -= 360;
+        currentYRotation = Mathf.Ceil(currentYRotation);
         var wait = new WaitForSeconds(fWaitForSecondsInterval);
+        Debug.Log(currentYRotation);
 
     }
 
@@ -212,12 +230,17 @@ public class PlayerMovement : MonoBehaviour {
         for (int g = 0; g < iRotateInterval; g++) {
             //transform.position = new Vector3(Mathf.Round(transform.position.x), fYLockPosition, Mathf.Round(transform.position.z));
             transform.localEulerAngles += new Vector3(0, -fRotateIncrement, 0);
-            currentYRotation += -fRotateIncrement;
             yield return new WaitForSeconds(fWaitForSecondsInterval);
         }
         yield return new WaitForSeconds(fWaitForSecondsInterval);
+        currentYRotation = transform.localEulerAngles.y;
+        currentYRotation %= 360;
+        if (currentYRotation > 180)
+            currentYRotation -= 360;
+        currentYRotation = Mathf.Ceil(currentYRotation);
         bRotating = false;
         var wait = new WaitForSeconds(fWaitForSecondsInterval);
+        Debug.Log(currentYRotation);
 
     }
 
