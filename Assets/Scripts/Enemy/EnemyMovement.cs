@@ -10,7 +10,7 @@ public class EnemyMovement : MonoBehaviour {
     EnemyVisibility enemVis;
     public bool isMove = false;
     private bool dejaVu = false;
-    private bool inRangeforAttack = false;
+    public bool inRangeforAttack = false;
     private int stepSize = 4;
     public float fRotateIncrement = 4.5f;
     public int iRotateInterval = 20;
@@ -56,7 +56,7 @@ public class EnemyMovement : MonoBehaviour {
 
     private void Attack()
     {
-        Debug.Log("Attacking");
+        //Debug.Log("Attacking");
     }
 
     int countBoxes()

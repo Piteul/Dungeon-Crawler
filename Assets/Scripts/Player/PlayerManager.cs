@@ -28,7 +28,9 @@ public class PlayerManager : MonoBehaviour {
 
     }
 
-
+    /// <summary>
+    /// Manage the player attack
+    /// </summary>
     public void Attack() {
         RaycastHit hit;
         int dmg;
@@ -47,6 +49,17 @@ public class PlayerManager : MonoBehaviour {
             Debug.DrawRay(transform.position, this.transform.forward * (sizeBox * weapon.attackDistance), Color.black);
 
         }
+    }
+
+    /// <summary>
+    /// Control how many damage the player take
+    /// </summary>
+    /// <param name="damage"></param>
+    public void takeDamage(int damage) {
+
+        health -= damage;
+        Debug.Log(health);
+
     }
 
 }

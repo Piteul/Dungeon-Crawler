@@ -2848,6 +2848,23 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55fdebf40b1042b4ebeb5f0b4dd72cd8, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &899770895 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1738186900816176, guid: 06946dadfde0bff4ba10e976f4125b31,
+    type: 2}
+  m_PrefabInternal: {fileID: 1930580549}
+--- !u!114 &899770896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 899770895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699f09c0be83e804690279804e3ad0bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensity: 0
 --- !u!1001 &932924592
 Prefab:
   m_ObjectHideFlags: 0
@@ -3056,6 +3073,48 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55fdebf40b1042b4ebeb5f0b4dd72cd8, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &944096855
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 944096857}
+  - component: {fileID: 944096856}
+  m_Layer: 0
+  m_Name: Shaker Tester
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &944096856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 944096855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df436197d1a26bd48b6a1a27cd24aec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaker: {fileID: 899770896}
+  duration: 0.1
+--- !u!4 &944096857
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 944096855}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1596554, y: 1.8752693, z: 0.2850989}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &982850427 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1420801250955124, guid: 548b7d74c571aa04e94dec7b0176719e,
@@ -3878,7 +3937,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-3094
+  m_Name: pb_Mesh-1480
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -4315,7 +4374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1530011029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4342,6 +4401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMove: 0
+  inRangeforAttack: 0
   fRotateIncrement: 4.5
   iRotateInterval: 20
 --- !u!114 &1530011031

@@ -31,7 +31,7 @@ public class EnemyManager : MonoBehaviour {
     public void takeDamage(int damage) {
 
         health -= damage;
-        Debug.Log(health);
+        //Debug.Log(health);
 
         if (health > 0 && DamageText) {
             ShowDamageText(damage);
@@ -39,6 +39,13 @@ public class EnemyManager : MonoBehaviour {
         else {
             Destroy(this.gameObject);
         }
+    }
+
+    public void Attack() {
+        int dmg;
+
+        dmg = toolbox.randomDamage(damage, 3);
+        player.GetComponent<PlayerManager>().takeDamage(dmg) ;
     }
 
     /// <summary>
@@ -51,7 +58,6 @@ public class EnemyManager : MonoBehaviour {
         damageTmp.GetComponent<TextMesh>().text = dmg.ToString();
 
         if (dmg < player.GetComponent<PlayerManager>().weapon.damage) {
-            Debug.Log("COLOR");
             color = new Color(0.88f, 0.86f, 0.15f);
         }
         else if (dmg == player.GetComponent<PlayerManager>().weapon.damage) {
