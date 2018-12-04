@@ -50,6 +50,7 @@ public class PlayerManager : MonoBehaviour {
         {
             if (weaponStash.transform.GetChild(i).gameObject.activeSelf == true)
             {
+                
                 weapon = weaponStash.transform.GetChild(i).GetComponent<Weapon>();
 
             }
