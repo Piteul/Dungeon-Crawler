@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour {
     Animator animator;
     public Slider CoolDownSlider;
     PlayerMovement PlayerMovement;
+    GameObject weaponStash;
     [HideInInspector]
     public Weapon weapon;
     Toolbox toolbox;
@@ -24,8 +25,13 @@ public class PlayerManager : MonoBehaviour {
     void Start() {
         animator = GetComponent<Animator>();
         PlayerMovement = GetComponent<PlayerMovement>();
-        weapon = GetComponentInChildren<Weapon>();
+        //weapon = GetComponentInChildren<Weapon>();
         toolbox = new Toolbox();
+        weaponStash = transform.Find("Weapon").gameObject;
+
+        
+        Debug.Log(coolDownTime);
+
     }
 
     // Update is called once per frame
@@ -35,12 +41,30 @@ public class PlayerManager : MonoBehaviour {
 
     }
 
+    void GetActiveWeapon()
+    {
+        // we get the current weapon and its parameters to associate them with the player.
+        for (int i = 0; i < weaponStash.transform.childCount; i++)
+        {
+            if (weaponStash.transform.GetChild(i).gameObject.activeSelf == true)
+            {
+                weapon = weaponStash.transform.GetChild(i).GetComponent<Weapon>();
+
+            }
+        }
+        coolDownTime = weapon.weaponCoolDown;
+    }
+
     /// <summary>
     /// Manage the player attack
     /// </summary>
     public void Attack() {
 
+        // search the current active weapon
+        GetActiveWeapon();
 
+        // 80 est la taille par défaut de notre slider, 2 est le coolDown par défaut.
+        CoolDownSlider.GetComponent<RectTransform>().sizeDelta= new Vector2(80 * coolDownTime / 2, 20);
         RaycastHit hit;
         int dmg;
         // here the player is in cooldown mode and can't attack
@@ -48,6 +72,7 @@ public class PlayerManager : MonoBehaviour {
             CoolDownSlider.gameObject.SetActive(true);
             // this is to count time
             time -= Time.deltaTime;
+            Debug.Log(time);
             CoolDownSlider.value = time * CoolDownSlider.maxValue / coolDownTime;
 
             if (time < 0) {
@@ -71,7 +96,6 @@ public class PlayerManager : MonoBehaviour {
                         enemy.TakeDamage(dmg);
                     }
                     Debug.DrawRay(transform.position, this.transform.forward * (sizeBox * weapon.attackDistance), Color.black);
-                    StartCoroutine(coolDownTimer(coolDownTime));
                 }
             }
         }
@@ -94,10 +118,6 @@ public class PlayerManager : MonoBehaviour {
         healthBar.transform.Find("HealthText").GetComponent<Text>().text = health.ToString();
     }
 
-    IEnumerator coolDownTimer(float time) {
-        yield return new WaitForSeconds(time);
-        coolDown = false;
-    }
 
 
 }

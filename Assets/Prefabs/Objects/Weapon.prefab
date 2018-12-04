@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4894078339734758}
   m_Layer: 0
   m_Name: Weapon
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -213,6 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   attackDistance: 1
+  weaponCoolDown: 2
 --- !u!114 &114584691037807072
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,6 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 2
   attackDistance: 3
+  weaponCoolDown: 4
 --- !u!114 &114810951953231084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -239,6 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   attackDistance: 1
+  weaponCoolDown: 5
 --- !u!212 &212730722625723642
 SpriteRenderer:
   m_ObjectHideFlags: 1
