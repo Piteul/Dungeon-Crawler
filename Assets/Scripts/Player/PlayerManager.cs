@@ -17,6 +17,7 @@ public class PlayerManager : MonoBehaviour {
     [HideInInspector]
     public Weapon weapon;
     Toolbox toolbox;
+    Shaker shaker;
 
     //UI
     public Slider healthBar;
@@ -28,7 +29,8 @@ public class PlayerManager : MonoBehaviour {
         //weapon = GetComponentInChildren<Weapon>();
         toolbox = new Toolbox();
         weaponStash = transform.Find("Weapon").gameObject;
-
+        shaker = GetComponent<Shaker>();
+        shaker.target = GameObject.FindGameObjectWithTag("MainCamera").transform;
         
         Debug.Log(coolDownTime);
 
@@ -68,23 +70,25 @@ public class PlayerManager : MonoBehaviour {
         RaycastHit hit;
         int dmg;
         // here the player is in cooldown mode and can't attack
+        
         if (coolDown) {
-            CoolDownSlider.gameObject.SetActive(true);
+            
             // this is to count time
             time -= Time.deltaTime;
             Debug.Log(time);
-            CoolDownSlider.value = time * CoolDownSlider.maxValue / coolDownTime;
+            CoolDownSlider.value = (coolDownTime - time) * CoolDownSlider.maxValue / coolDownTime;
 
             if (time < 0) {
                 coolDown = false;
                 time = coolDownTime;
-                CoolDownSlider.gameObject.SetActive(false);
+                CoolDownSlider.value = time * CoolDownSlider.maxValue;
             }
         }
         else {
             if (Input.GetMouseButtonDown(0)) {
 
                 time = coolDownTime;
+                CoolDownSlider.value = 0;
                 coolDown = true;
                 animator.SetTrigger("Attack");
 
@@ -108,6 +112,7 @@ public class PlayerManager : MonoBehaviour {
     public void TakeDamage(int damage) {
 
         health -= damage;
+        shaker.Shake(0.1f);
         UIGestion();
         Debug.Log(health);
 

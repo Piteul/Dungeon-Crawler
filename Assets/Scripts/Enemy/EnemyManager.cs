@@ -52,7 +52,6 @@ public class EnemyManager : MonoBehaviour {
     public void Attack() {
         int dmg;
 
-        transform.localPosition = Vector3.Lerp(transform.localPosition, (transform.forward * 20f), 0.1f);
         dmg = toolbox.randomValue(damage, damageDimmer);
         //Debug.Log("Damage : " + dmg);
         player.GetComponent<PlayerManager>().TakeDamage(dmg);
