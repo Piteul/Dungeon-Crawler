@@ -6,7 +6,7 @@ public class Shaker : MonoBehaviour {
 
     [Range(0f,2f)]
     public float intensity;
-    Transform target;
+    public Transform target;
     Vector3 initialPos;
     float pendingShakeDuration = 0f;
     bool isShacking = false;
@@ -35,9 +35,8 @@ public class Shaker : MonoBehaviour {
         var startTime = Time.realtimeSinceStartup;
         while(Time.realtimeSinceStartup < startTime + pendingShakeDuration) {
             //Do shack stuff
-            //var randomPoint = new Vector3(Random.Range(-0.2f, 0.2f)*intensity, initialPos.y, Random.Range(-0.2f, 0.2f)*intensity);
             var randomPoint = new Vector3(initialPos.x, initialPos.y, Random.Range(-0.2f, 0.2f)*intensity);
-            target.localPosition = randomPoint;
+            target.localPosition += randomPoint;
             yield return null;
         }
 

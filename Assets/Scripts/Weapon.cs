@@ -7,7 +7,7 @@ public class Weapon : MonoBehaviour {
     public int damage = 5;
     //Attack Distance by Box
     public int attackDistance = 1;
-
+    public int weaponCoolDown = 2;
 	// Use this for initialization
 	void Start () {
 		
