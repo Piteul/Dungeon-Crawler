@@ -53,7 +53,7 @@ public class EnemyManager : MonoBehaviour {
         int dmg;
 
         dmg = toolbox.randomValue(damage, damageDimmer);
-        //Debug.Log("Damage : " + dmg);
+        Debug.Log("Damage : " + dmg);
         player.GetComponent<PlayerManager>().TakeDamage(dmg);
     }
 

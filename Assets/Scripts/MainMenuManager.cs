@@ -14,6 +14,7 @@ public class MainMenuManager : MonoBehaviour {
     public Text startText;
     public Text quitText;
     public Text[] textClignotant;
+    private bool clignote = true;
     // Use this for initialization
     void Start () {
         textClignotant = new Text[] { startText, quitText };
@@ -37,6 +38,7 @@ public class MainMenuManager : MonoBehaviour {
     IEnumerator Clignoter(Text[] texts)
     {
         locked = true;
+
         yield return new WaitForSeconds(0.3f);
         if (show)
         {
@@ -45,7 +47,7 @@ public class MainMenuManager : MonoBehaviour {
                 texts[i].color = new Color(texts[i].color.r, texts[i].color.g, texts[i].color.b, 1f);
             }
         }
-        else
+        else if(clignote)
         {
             for (int i = 0; i < texts.Length; i++)
             {
@@ -61,6 +63,35 @@ public class MainMenuManager : MonoBehaviour {
     {
         SceneManager.LoadScene(1);
     }
+
+    public void HoverStart()
+    {
+        clignote = false;
+        startText.color = new Color(0f, 1f, 0f);
+        startText.fontSize = 120; 
+    }
+
+    public void UnHoverStart()
+    {
+        clignote = true;
+        startText.color = new Color(1f, 1f, 1f);
+        startText.fontSize = 100;
+    }
+
+    public void HoverQuit()
+    {
+        clignote = false;
+        quitText.color = new Color(1f, 0f, 0f);
+        quitText.fontSize = 120;
+    }
+
+    public void UnHoverQuit()
+    {
+        clignote = true;
+        quitText.color = new Color(1f, 1f, 1f);
+        quitText.fontSize = 100;
+    }
+
     public void ExitGame()
     {
         Debug.Log("Clicked");

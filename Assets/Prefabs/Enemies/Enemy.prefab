@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114804801079336656}
   - component: {fileID: 114559052744010610}
   - component: {fileID: 114147507407609700}
+  - component: {fileID: 135499446519306482}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -130,6 +131,18 @@ MonoBehaviour:
   damageDimmer: 3
   attackDistance: 1
   DamageText: {fileID: 1118822662274382, guid: de47623fd70d874449bdb63e24d90d70, type: 2}
+--- !u!135 &135499446519306482
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1100520699226924}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136306568969743860
 CapsuleCollider:
   m_ObjectHideFlags: 1
